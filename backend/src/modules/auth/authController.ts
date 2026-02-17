@@ -31,3 +31,21 @@ export const registerUser = catchAsyncError(async (req, res, next) => {
   });
   sendToken(user, 200, res);
 });
+// login User
+export const loginUser = catchAsyncError(async (req, res, next) => {
+  const { email, password } = req.body;
+
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
+  //check user is exist or not
+  if (!user) {
+    throw new ErrorHandler("Invalid email or password", 400);
+  }
+  const comparePassword = await bcrypt.compare(password, user.password);
+  //check password is correct or not
+  if (!comparePassword) {
+    throw new ErrorHandler("Invalid password", 400);
+  }
+  sendToken(user, 200, res);
+});
