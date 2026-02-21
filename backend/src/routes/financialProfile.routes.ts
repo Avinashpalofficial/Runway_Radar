@@ -21,7 +21,7 @@ financialRouter.post(
 );
 financialRouter.get("/financial-profile", authUser, getFinancialProfile);
 financialRouter.post(
-  "/financial-profile",
+  "/update-financial-profile",
   authUser,
   validate(updateFinancialProfileSchema),
   updateFinancialProfile,
