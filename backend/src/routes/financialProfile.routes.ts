@@ -1,8 +1,15 @@
 import { Router } from "express";
 import { authUser } from "../middlewares/auth";
 import { validate } from "../middlewares/validate";
-import { createFinancialProfileSchema } from "../validate/financialProfile.schema";
-import { createProfile } from "../modules/financialProfile/financialProfile.controller";
+import {
+  createFinancialProfileSchema,
+  updateFinancialProfileSchema,
+} from "../validate/financialProfile.schema";
+import {
+  createProfile,
+  getFinancialProfile,
+  updateFinancialProfile,
+} from "../modules/financialProfile/financialProfile.controller";
 
 const financialRouter = Router();
 
@@ -11,6 +18,13 @@ financialRouter.post(
   authUser,
   validate(createFinancialProfileSchema),
   createProfile,
+);
+financialRouter.get("/financial-profile", authUser, getFinancialProfile);
+financialRouter.post(
+  "/update-financial-profile",
+  authUser,
+  validate(updateFinancialProfileSchema),
+  updateFinancialProfile,
 );
 
 export default financialRouter;
