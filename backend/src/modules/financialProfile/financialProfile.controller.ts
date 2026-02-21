@@ -39,3 +39,23 @@ export const getFinancialProfile = catchAsyncError(async (req, res, next) => {
     data: profile,
   });
 });
+/*
+updata financial profile
+*/
+export const updateFinancialProfile = catchAsyncError(
+  async (req, res, next) => {
+    const userId = req.user.id;
+    const { cashAvailable } = req.body;
+    if (!userId) {
+      throw new ErrorHandler("userId not exist", 401);
+    }
+    const updateProfile = await financialService.updateFinancialProfile(
+      userId,
+      new Prisma.Decimal(cashAvailable),
+    );
+    res.status(200).json({
+      success: true,
+      data: updateProfile,
+    });
+  },
+);
