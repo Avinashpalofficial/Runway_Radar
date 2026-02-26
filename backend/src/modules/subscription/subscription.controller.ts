@@ -20,3 +20,23 @@ export const create = catchAsyncError(async (req, res, next) => {
     subscription,
   });
 });
+
+/**
+ * Get  all subscription
+ */
+
+export const allSubscription = catchAsyncError(async (req, res, next) => {
+  const userId = req.user.id;
+  if (!userId) {
+    throw new ErrorHandler("User not found", 401);
+  }
+  const allsubs = await subscriptionServices.getSubscription(userId);
+
+  if (!allsubs) {
+    throw new ErrorHandler("allsubs not found or user is not exist", 401);
+  }
+  res.status(200).json({
+    success: true,
+    allsubs,
+  });
+});
