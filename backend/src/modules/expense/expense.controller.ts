@@ -43,3 +43,19 @@ export const getAll = catchAsyncError(async (req, res, next) => {
  *
  * Update Expense Controller
  */
+
+export const update = catchAsyncError(async (req, res, next) => {
+  const userId = req.user.id;
+  const id = req.params.id as string;
+  const { amount, category } = req.body;
+  const expense = await expenseService.updateExpense(
+    userId,
+    id,
+    amount,
+    category,
+  );
+  res.status(200).json({
+    success: true,
+    expense,
+  });
+});
