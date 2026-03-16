@@ -27,5 +27,8 @@ export const financeEngine = async (userId: string) => {
     runway,
     profitOrloss,
     arr,
+    subscription,
+    expense,
+    financialProfile,
   };
 };
