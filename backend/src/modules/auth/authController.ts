@@ -49,3 +49,18 @@ export const loginUser = catchAsyncError(async (req, res, next) => {
   }
   sendToken(user, 200, res);
 });
+
+export const getCurrentUser = catchAsyncError(async (req, res, next) => {
+  const userId = req.user.id;
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+    },
+  });
+  res.status(200).json({
+    user,
+  });
+});
