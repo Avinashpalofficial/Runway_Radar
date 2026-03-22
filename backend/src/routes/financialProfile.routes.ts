@@ -20,7 +20,7 @@ financialRouter.post(
   createProfile,
 );
 financialRouter.get("/financial-profile", authUser, getFinancialProfile);
-financialRouter.post(
+financialRouter.patch(
   "/update-financial-profile",
   authUser,
   validate(updateFinancialProfileSchema),
