@@ -9,7 +9,7 @@ import RevenueManagement from "./pages/RevenueManagement";
 import ExpenseManagement from "./pages/ExpenseManagement";
 import SubscriptionManagement from "./pages/SubscriptionManagement";
 import Features from "./pages/Features";
-import Pricing from "./pages/Pricing";
+// import Pricing from "./pages/Pricing";
 import Docs from "./pages/Docs";
 import Changelog from "./pages/Changelog";
 import { useAuth } from "./hooks/useAuth";
@@ -22,7 +22,7 @@ export default function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/features" element={<Features />} />
-      <Route path="/pricing" element={<Pricing />} />
+      {/* <Route path="/pricing" element={<Pricing />} /> */}
       <Route path="/docs" element={<Docs />} />
       <Route path="/changelog" element={<Changelog />} />
 
