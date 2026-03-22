@@ -18,6 +18,8 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "../lib/utils";
+import { useExpense } from "../hooks/useExpense";
+import { useDashboard } from "../hooks/useDashboard";
 
 interface ExpenseEntry {
   id: string;
@@ -34,57 +36,6 @@ interface ExpenseEntry {
   status: "Paid" | "Pending";
 }
 
-const MOCK_EXPENSES: ExpenseEntry[] = [
-  {
-    id: "1",
-    vendor: "AWS Cloud Services",
-    amount: 4200,
-    date: "2024-02-24",
-    category: "Infrastructure",
-    status: "Paid",
-  },
-  {
-    id: "2",
-    vendor: "Slack Technologies",
-    amount: 850,
-    date: "2024-02-22",
-    category: "SaaS",
-    status: "Paid",
-  },
-  {
-    id: "3",
-    vendor: "Google Ads",
-    amount: 2500,
-    date: "2024-02-20",
-    category: "Marketing",
-    status: "Paid",
-  },
-  {
-    id: "4",
-    vendor: "WeWork Office",
-    amount: 3200,
-    date: "2024-02-15",
-    category: "Office",
-    status: "Pending",
-  },
-  {
-    id: "5",
-    vendor: "Gusto Payroll",
-    amount: 22000,
-    date: "2024-02-01",
-    category: "Payroll",
-    status: "Paid",
-  },
-  {
-    id: "6",
-    vendor: "Vercel Inc",
-    amount: 150,
-    date: "2024-01-28",
-    category: "Infrastructure",
-    status: "Paid",
-  },
-];
-
 const CATEGORY_ICONS = {
   Infrastructure: Server,
   SaaS: Zap,
@@ -95,7 +46,19 @@ const CATEGORY_ICONS = {
 };
 
 export default function ExpenseManagement() {
-  const [entries, setEntries] = useState<ExpenseEntry[]>(MOCK_EXPENSES);
+  const { data: expense, createExpenseMutation } = useExpense();
+  const { metrics } = useDashboard();
+  const entries: ExpenseEntry[] =
+    expense?.map((exp) => ({
+      id: exp.id,
+      vendor: exp.title,
+      amount: Number(exp.amount),
+      date: exp.createdAt,
+      category: "Other", // later improve mapping
+      status: "Paid",
+    })) || [];
+  console.log("what:", metrics);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filterMonth, setFilterMonth] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
@@ -119,22 +82,21 @@ export default function ExpenseManagement() {
     });
   }, [entries, searchQuery, filterMonth]);
 
-  const monthlyTotal = useMemo(() => {
-    return filteredEntries.reduce((acc, curr) => acc + curr.amount, 0);
-  }, [filteredEntries]);
+  const burn = metrics?.burn || 0;
+  console.log("burn:", burn);
 
   const handleAddExpense = (e: React.FormEvent) => {
     e.preventDefault();
-    const entry: ExpenseEntry = {
-      id: Math.random().toString(36).substr(2, 9),
-      vendor: newEntry.vendor,
-      amount: parseFloat(newEntry.amount),
-      date: newEntry.date,
+
+    createExpenseMutation.mutate({
+      title: newEntry.vendor,
+      currency: "INR",
+      amount: Number(newEntry.amount),
       category: newEntry.category,
-      status: "Paid",
-    };
-    setEntries([entry, ...entries]);
+    });
+
     setIsModalOpen(false);
+
     setNewEntry({
       vendor: "",
       amount: "",
@@ -177,7 +139,7 @@ export default function ExpenseManagement() {
                 Monthly Burn
               </div>
               <div className="text-2xl font-bold text-white">
-                ${monthlyTotal.toLocaleString()}
+                ${burn.toLocaleString()}
               </div>
             </div>
           </div>
