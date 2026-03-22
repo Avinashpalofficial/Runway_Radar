@@ -30,9 +30,9 @@ const Nav = () => (
         <Link to="/features" className="hover:text-white transition-colors">
           Features
         </Link>
-        <Link to="/pricing" className="hover:text-white transition-colors">
+        {/* <Link to="/pricing" className="hover:text-white transition-colors">
           Pricing
-        </Link>
+        </Link> */}
         <Link to="/docs" className="text-white transition-colors">
           Docs
         </Link>
