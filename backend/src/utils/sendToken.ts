@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { ErrorHandler } from "./ErrorHandler";
-import jwt from "jsonwebtoken";
+import jwt, { Secret, SignOptions } from "jsonwebtoken";
 
 interface TokenUser {
   id: string;
@@ -12,14 +12,17 @@ export const sendToken = (
   statusCode: number,
   res: Response,
 ): void => {
-  if (!process.env.JWT_SECRET) {
+  const secret = process.env.JWT_SECRET;
+  const expiresIn = process.env.JWT_EXPIRES_TIME || "1d";
+
+  if (!secret) {
     throw new ErrorHandler("JWT_SECRET is not defined", 400);
   }
 
   const token = jwt.sign(
     { id: user.id, email: user.email },
-    process.env.JWT_SECRET,
-    { expiresIn: process.env.JWT_EXPIRES_TIME || "1d" },
+    secret as Secret,
+    { expiresIn } as SignOptions,
   );
 
   const cookieExpireDays = Number(process.env.COOKIE_EXPIRES_TIME) || 1;
@@ -27,7 +30,7 @@ export const sendToken = (
   const options = {
     expires: new Date(Date.now() + cookieExpireDays * 24 * 60 * 60 * 1000),
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production", // ✅ fixed
+    secure: process.env.NODE_ENV === "production",
     sameSite: "lax" as const,
   };
 
