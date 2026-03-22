@@ -10,5 +10,15 @@ export interface LoginData {
 }
 export interface User {
   id: string;
+  name: string;
   email: string;
+}
+
+export interface getCurrentUserResponse {
+  user: User;
+}
+export interface AuthResponse {
+  user: User;
+  token: string;
+  success: boolean;
 }
