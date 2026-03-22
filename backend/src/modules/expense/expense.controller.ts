@@ -6,7 +6,7 @@ import { ErrorHandler } from "../../utils/ErrorHandler";
 
 export const create = catchAsyncError(async (req, res, next) => {
   const userId = req.user.id;
-  console.log("userId:", userId);
+  console.log("userId1:", userId);
 
   const { title, currency, amount, category } = req.body;
   const expense = await expenseService.createExpense(
