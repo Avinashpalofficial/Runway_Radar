@@ -24,9 +24,7 @@
     "typescript": "^5.9.3"
   },
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "build": "prisma generate && tsc",
-    "start": "node dist/server.js",
-    "migrate": "prisma migrate deploy"
+    "build": "npx prisma generate && tsc",
+    "start": "node dist/server.js"
   }
 }
