@@ -34,13 +34,13 @@ const Nav = () => (
           Features
           <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-brand" />
         </Link>
-        <Link
+        {/* <Link
           to="/pricing"
           className="hover:text-white transition-colors relative group"
         >
           Pricing
           <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand transition-all group-hover:w-full" />
-        </Link>
+        </Link> */}
         <Link
           to="/docs"
           className="hover:text-white transition-colors relative group"
