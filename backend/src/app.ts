@@ -15,7 +15,6 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "http://localhost:3000", // Local development
       "https://runway-radar.vercel.app", // Production frontend
     ],
     credentials: true,
