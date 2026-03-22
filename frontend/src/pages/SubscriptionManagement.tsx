@@ -74,7 +74,7 @@ export default function SubscriptionManagement() {
     return subscriptions.filter((s) => s.status === "Active").length;
   }, [subscriptions]);
 
-  const mrr = metrics?.mrr || 0;
+  const mrr = Number(metrics?.mrr) || 0;
   console.log("merr:", mrr);
 
   const handleAddSubscription = (e: React.FormEvent) => {
