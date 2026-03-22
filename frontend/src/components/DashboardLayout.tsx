@@ -12,10 +12,12 @@ import {
   X,
   ChevronRight,
   User,
+  Wallet, // Added this icon
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "../lib/utils";
 import { motion, AnimatePresence } from "motion/react";
+import { useAuthStore } from "../store/auth.store";
 
 interface SidebarItemProps {
   icon: React.ElementType;
@@ -69,6 +71,8 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const user = useAuthStore((state) => state.user);
+
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -78,6 +82,11 @@ export default function DashboardLayout({
     { icon: DollarSign, label: "Revenue", href: "/dashboard/revenue" },
     { icon: Activity, label: "Expenses", href: "/dashboard/expenses" },
     { icon: Users, label: "Subscriptions", href: "/dashboard/subscriptions" },
+    {
+      icon: Wallet,
+      label: "Finance Profile",
+      href: "/dashboard/finance-profile",
+    }, // New Item added here
     { icon: Settings, label: "Settings", href: "/dashboard/settings" },
   ];
 
@@ -95,7 +104,7 @@ export default function DashboardLayout({
         )}
       >
         <div className="h-20 flex items-center px-6 mb-4">
-          <Link to="/" className="flex items-center gap-3 group">
+          <Link to="/dashboard" className="flex items-center gap-3 group">
             <div className="w-8 h-8 bg-linear-to-tr from-brand to-blue-500 rounded-lg shadow-lg shadow-brand/20 shrink-0" />
             {!isSidebarCollapsed && (
               <span className="text-xl font-bold tracking-tight text-white animate-fade-in">
@@ -222,7 +231,7 @@ export default function DashboardLayout({
             <div className="flex items-center gap-3 pl-2 group cursor-pointer">
               <div className="text-right hidden sm:block">
                 <div className="text-sm font-bold text-white group-hover:text-brand-light transition-colors">
-                  Alex Rivers
+                  {user?.name || "Guest"}
                 </div>
                 <div className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">
                   Founder Plan
