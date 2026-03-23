@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { ErrorHandler } from "./ErrorHandler";
 import jwt, { Secret, SignOptions } from "jsonwebtoken";
+import { CookieOptions } from "express";
 
 interface TokenUser {
   id: string;
@@ -27,13 +28,13 @@ export const sendToken = (
 
   const cookieExpireDays = Number(process.env.COOKIE_EXPIRES_TIME) || 1;
 
-  const options = {
+  const options: CookieOptions = {
     expires: new Date(Date.now() + cookieExpireDays * 24 * 60 * 60 * 1000),
     httpOnly: true,
     secure: true,
     sameSite: "none",
+    path: "/",
   };
-
   res.status(statusCode).cookie("token", token, options).json({
     success: true,
     token,
