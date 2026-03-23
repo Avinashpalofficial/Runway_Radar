@@ -10,7 +10,9 @@ import getDashboard from "./routes/dashboard.routes";
 import dashboardRouter from "./routes/dashboard.routes";
 
 const app = express();
-
+app.get("/", (req, res) => {
+  res.send("RUNNING NEW BUILD 🚀");
+});
 // CORS Configuration - Support both local and production
 app.use(
   cors({
