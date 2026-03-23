@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2020",
     "module": "CommonJS",
-    "rootDir": ".",
+    "rootDir": "./src", // ✅ CHANGE
     "outDir": "./dist",
 
     "moduleResolution": "node",
@@ -15,5 +15,5 @@
     "types": ["node"]
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"] // 🔥 remove prisma.config.ts from here
+  "exclude": ["node_modules"]
 }
