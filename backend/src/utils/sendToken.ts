@@ -30,8 +30,8 @@ export const sendToken = (
   const options = {
     expires: new Date(Date.now() + cookieExpireDays * 24 * 60 * 60 * 1000),
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax" as const,
+    secure: true,
+    sameSite: "none",
   };
 
   res.status(statusCode).cookie("token", token, options).json({
