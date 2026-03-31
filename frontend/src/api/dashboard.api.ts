@@ -2,7 +2,7 @@ import { api } from "../lib/api";
 import { DashboardResponse } from "../types/dashboard.types";
 
 export const getDashboardData = async (): Promise<DashboardResponse> => {
-  const res = await api.get("/dashboard/summary");
+  const res = await api.get("/v1/dashboard/summary");
   const apiData = res.data.data;
   console.log("alpi:", apiData);
 

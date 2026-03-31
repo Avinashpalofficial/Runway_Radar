@@ -8,15 +8,15 @@ import {
 import { api } from "../lib/api";
 
 export const SingupUser = async (data: SignupData): Promise<User> => {
-  const res = await api.post<User>("/auth/user/register", data);
+  const res = await api.post<User>("/v1/auth/user/register", data);
   return res.data;
 };
 
 export const LoginUser = async (data: LoginData): Promise<User> => {
-  const res = await api.post<AuthResponse>("/auth/user/login", data);
+  const res = await api.post<AuthResponse>("/v1/auth/user/login", data);
   return res.data.user;
 };
 export const getCurrentUser = async (): Promise<User> => {
-  const res = await api.get<getCurrentUserResponse>("/auth/user/me");
+  const res = await api.get<getCurrentUserResponse>("/v1/auth/user/me");
   return res.data.user;
 };

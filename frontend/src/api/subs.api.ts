@@ -7,10 +7,10 @@ export const createSubscription = async (data: {
   price: number;
   billingType: "MONTHLY" | "YEARLY";
 }): Promise<Subscription> => {
-  const res = await api.post("/subscription", data);
+  const res = await api.post("/v1/subscription", data);
   return res.data.subscription;
 };
 export const getSubscription = async (): Promise<Subscription[]> => {
-  const res = await api.get("/subscription/all-subscription");
+  const res = await api.get("/v1/subscription/all-subscription");
   return res.data.allsubs;
 };

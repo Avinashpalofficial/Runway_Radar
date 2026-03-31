@@ -12,7 +12,7 @@ export const createFinancialProfile = async (
   data: CreateFinancialProfile,
 ): Promise<FinanceProfile> => {
   const res = await api.post<CreateFinancialProfileResponse>(
-    "/financial/financial-profile",
+    "/v1/financial/financial-profile",
     data,
   );
   return res.data.profile;
@@ -20,7 +20,7 @@ export const createFinancialProfile = async (
 
 export const getFinanceProfile = async (): Promise<FinanceProfile> => {
   const res = await api.get<GetFinancialProfileResponse>(
-    "/financial/financial-profile",
+    "/v1/financial/financial-profile",
   );
   return res.data.data;
 };
@@ -28,7 +28,7 @@ export const updateFinancialProfile = async (
   data: UpdateFinancialProfile,
 ): Promise<FinanceProfile> => {
   const res = await api.patch<UpdateFinancialProfileResponse>(
-    "/financial/update-financial-profile",
+    "/v1/financial/update-financial-profile",
     data,
   );
   return res.data.data;
