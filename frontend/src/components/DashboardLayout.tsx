@@ -18,6 +18,8 @@ import { Link, useLocation } from "react-router-dom";
 import { cn } from "../lib/utils";
 import { motion, AnimatePresence } from "motion/react";
 import { useAuthStore } from "../store/auth.store";
+import { useAuth } from "../hooks/useAuth";
+import { log } from "node:util";
 
 interface SidebarItemProps {
   icon: React.ElementType;
@@ -72,7 +74,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const user = useAuthStore((state) => state.user);
-
+  const { logout } = useAuth();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -187,7 +189,10 @@ export default function DashboardLayout({
                 ))}
               </nav>
               <div className="pt-6 border-t border-white/5">
-                <button className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-red-400 hover:bg-red-500/10 transition-all">
+                <button
+                  onClick={() => logout()}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-red-400 hover:bg-red-500/10 transition-all"
+                >
                   <LogOut className="w-5 h-5" />
                   <span className="text-sm font-medium">Logout</span>
                 </button>
@@ -240,7 +245,10 @@ export default function DashboardLayout({
               <div className="w-10 h-10 rounded-xl bg-linear-to-br from-brand/20 to-blue-500/20 border border-white/10 flex items-center justify-center group-hover:border-brand/50 transition-all">
                 <User className="w-5 h-5 text-brand-light" />
               </div>
-              <button className="p-2 text-slate-500 hover:text-red-400 transition-colors hidden sm:block">
+              <button
+                onClick={() => logout()}
+                className="p-2 text-slate-500 hover:text-red-400 transition-colors hidden sm:block"
+              >
                 <LogOut className="w-4 h-4" />
               </button>
             </div>
