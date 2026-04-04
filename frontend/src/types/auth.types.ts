@@ -8,12 +8,15 @@ export interface LoginData {
   email: string;
   password: string;
 }
+export interface LogoutData {
+  success: boolean;
+  message: string;
+}
 export interface User {
   id: string;
   name: string;
   email: string;
 }
-
 export interface getCurrentUserResponse {
   user: User;
 }
