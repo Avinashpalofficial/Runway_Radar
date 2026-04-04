@@ -5,10 +5,11 @@ import {
   updateFinancialProfile,
 } from "../api/finance.Profile.api";
 import { FinanceProfile } from "../types/financial.profile.types";
+import { useAuthStore } from "../store/auth.store";
 
 export const useFinanceProfile = () => {
   const queryClient = useQueryClient();
-
+  const user = useAuthStore((state) => state.user);
   // 🔹 GET profile
   const {
     data: profile,
@@ -17,6 +18,8 @@ export const useFinanceProfile = () => {
   } = useQuery<FinanceProfile>({
     queryKey: ["finance-profile"],
     queryFn: getFinanceProfile,
+    enabled: !!user,
+    retry: false,
   });
 
   // 🔹 CREATE profile
