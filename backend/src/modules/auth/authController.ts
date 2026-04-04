@@ -49,7 +49,19 @@ export const loginUser = catchAsyncError(async (req, res, next) => {
   }
   sendToken(user, 200, res);
 });
+export const logoutUser = catchAsyncError(async (req, res, next) => {
+  res.cookie("token", "", {
+    httpOnly: true,
+    expires: new Date(0), // immediately expire the cookie
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
 
+  res.status(200).json({
+    success: true,
+    message: "Logged out successfully",
+  });
+});
 export const getCurrentUser = catchAsyncError(async (req, res, next) => {
   const userId = req.user.id;
   const user = await prisma.user.findUnique({
